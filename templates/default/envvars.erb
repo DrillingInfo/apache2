@@ -35,10 +35,11 @@ export LANG
 ## If you need a higher file descriptor limit, uncomment and adjust the
 ## following line (default is 8192):
 #APACHE_ULIMIT_MAX_FILES='ulimit -n 65536'
-
 <% unless @node['apache']['envvars'].empty? -%>
+
 ## Extra environment variables from node['apache']['envvars'].
 <% end -%>
-<% for @envar in @node['apache']['envvars'].keys -%>
-export <%= @envar %>=<%= @node['apache']['envvars'][@envar] %>
+<% Chef::Log.debug "node['apache']['envvars'] = #{@node['apache']['envvars'].to_hash.inspect}" -%>
+<% @node['apache']['envvars'].to_hash.each do |k,v| -%>
+export <%= k %>=<%= v %>
 <% end -%>
