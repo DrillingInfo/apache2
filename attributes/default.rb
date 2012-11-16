@@ -49,9 +49,12 @@ when "debian","ubuntu"
   set['apache']['binary']  = "/usr/sbin/apache2"
   set['apache']['icondir'] = "/usr/share/apache2/icons"
   set['apache']['cache_dir'] = "/var/cache/apache2"
-  set['apache']['pid_file']  = "/var/run/apache2.pid"
+  set['apache']['run_dir'] = "/var/run/apache2"
+  set['apache']['pid_file_base']  = "/var/run/apache2"
+  set['apache']['pid_file'] = "#{set['apache']['pid_file_base']}.pid"
   set['apache']['lib_dir'] = "/usr/lib/apache2"
   set['apache']['libexecdir'] = "#{set['apache']['lib_dir']}/modules"
+  set['apache']['lock_dir'] = "/var/lock/apache2"
   set['apache']['default_site_enabled'] = false
 when "arch"
   set['apache']['package'] = "apache"
@@ -148,5 +151,5 @@ default['apache']['default_modules'] = %w{
   default['apache']['default_modules'] << log_mod if ["rhel", "fedora", "suse", "arch", "freebsd"].include?(node['platform_family'])
 end
 
-# Environment Variables
+# Extra environment variables added to the envvars file
 default['apache']['envvars'] = {}
