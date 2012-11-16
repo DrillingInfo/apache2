@@ -149,5 +149,4 @@ default['apache']['default_modules'] = %w{
 end
 
 # Environment Variables
-default['apache']['envvars'] = { 
-}
+default['apache']['envvars'] = {}
