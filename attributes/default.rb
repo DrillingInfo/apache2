@@ -31,11 +31,10 @@ when "redhat","centos","scientific","fedora","suse","amazon"
   set['apache']['binary']  = "/usr/sbin/httpd"
   set['apache']['icondir'] = "/var/www/icons"
   set['apache']['cache_dir'] = "/var/cache/httpd"
-  set['apache']['run_dir'] = "/var/run/httpd"
   if node['platform_version'].to_f >= 6 then
-    set['apache']['pid_file_base']  = "/var/run/httpd/httpd"
+    set['apache']['pid_file'] = "/var/run/httpd/httpd.pid"
   else
-    set['apache']['pid_file_base']  = "/var/run/httpd"
+    set['apache']['pid_file'] = "/var/run/httpd.pid"
   end
   set['apache']['lib_dir'] = node['kernel']['machine'] =~ /^i[36']86$/ ? "/usr/lib/httpd" : "/usr/lib64/httpd"
   set['apache']['libexecdir'] = "#{set['apache']['lib_dir']}/modules"
@@ -52,6 +51,7 @@ when "debian","ubuntu"
   set['apache']['cache_dir'] = "/var/cache/apache2"
   set['apache']['run_dir'] = "/var/run/apache2"
   set['apache']['pid_file_base']  = "/var/run/apache2"
+  set['apache']['pid_file'] = "#{set['apache']['pid_file_base']}.pid"
   set['apache']['lib_dir'] = "/usr/lib/apache2"
   set['apache']['libexecdir'] = "#{set['apache']['lib_dir']}/modules"
   set['apache']['lock_dir'] = "/var/lock/apache2"
@@ -66,8 +66,7 @@ when "arch"
   set['apache']['binary']  = "/usr/sbin/httpd"
   set['apache']['icondir'] = "/usr/share/httpd/icons"
   set['apache']['cache_dir'] = "/var/cache/httpd"
-  set['apache']['run_dir'] = "/var/run/httpd"
-  set['apache']['pid_file_base']  = "/var/run/httpd/httpd"
+  set['apache']['pid_file']  = "/var/run/httpd/httpd.pid"
   set['apache']['lib_dir'] = "/usr/lib/httpd"
   set['apache']['libexecdir'] = "#{set['apache']['lib_dir']}/modules"
   set['apache']['default_site_enabled'] = false
@@ -82,8 +81,7 @@ when "freebsd"
   set['apache']['binary']  = "/usr/local/sbin/httpd"
   set['apache']['icondir'] = "/usr/local/www/apache22/icons"
   set['apache']['cache_dir'] = "/var/run/apache22"
-  set['apache']['run_dir'] = "/var/run/apache22"
-  set['apache']['pid_file_base']  = "/var/run/httpd"
+  set['apache']['pid_file']  = "/var/run/httpd.pid"
   set['apache']['lib_dir'] = "/usr/local/libexec/apache22"
   set['apache']['libexecdir'] = set['apache']['lib_dir']
   set['apache']['default_site_enabled'] = false
@@ -96,13 +94,11 @@ else
   set['apache']['binary']  = "/usr/sbin/apache2"
   set['apache']['icondir'] = "/usr/share/apache2/icons"
   set['apache']['cache_dir'] = "/var/cache/apache2"
-  set['apache']['run_dir'] = "/var/run/apache2"
-  set['apache']['pid_file_base']  = "logs/httpd"
+  set['apache']['pid_file']  = "logs/httpd.pid"
   set['apache']['lib_dir'] = "/usr/lib/apache2"
   set['apache']['libexecdir'] = "#{set['apache']['lib_dir']}/modules"
   set['apache']['default_site_enabled'] = false
 end
-set['apache']['pid_file'] = "#{set['apache']['pid_file_base']}.pid"
 
 ###
 # These settings need the unless, since we want them to be tunable,
